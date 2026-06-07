@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutschland Draft – All-Time XI</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080b0f;
+  --gold: #FFD700;
+  --gold-dim: #c9a800;
+  --gold-glow: rgba(255,215,0,0.18);
+  --red: #CC0000;
+  --surface: #111518;
+  --surface2: #181d22;
+  --surface3: #202830;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text: #f0f0f0;
+  --muted: #7a8590;
+  --green1: #1e4a0f;
+  --green2: #245c13;
+  --line: rgba(255,255,255,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;font-family:'Barlow',sans-serif;background:var(--black);color:var(--text);-webkit-tap-highlight-color:transparent;overflow-x:hidden;}
+
+.hdr{background:var(--surface);border-bottom:1.5px solid rgba(255,215,0,0.25);padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:50;}
+.hdr-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px;color:var(--gold);white-space:nowrap;}
+.hdr-flag{display:flex;border-radius:3px;overflow:hidden;width:36px;height:22px;flex-shrink:0;}
+.hdr-flag div{flex:1;}
+.formation-wrap{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.formation-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;white-space:nowrap;}
+select#fp{background:var(--surface3);color:var(--gold);border:1px solid rgba(255,215,0,0.3);border-radius:6px;padding:6px 10px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;cursor:pointer;outline:none;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23FFD700'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:24px;}
+
+.rating-bar{background:var(--surface2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.avg-block{display:flex;align-items:center;gap:10px;}
+.avg-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+.avg-track{flex:1;min-width:120px;height:6px;background:var(--surface3);border-radius:3px;overflow:hidden;}
+.avg-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--red),var(--gold));transition:width 0.5s ease;}
+.avg-num{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--gold);letter-spacing:1px;line-height:1;}
+.avg-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.slot-count{font-size:12px;color:var(--muted);margin-left:auto;}
+.slot-count span{color:var(--gold);font-weight:600;}
+
+.layout{display:flex;gap:0;height:calc(100dvh - 110px);min-height:400px;}
+.field-wrap{flex:1;position:relative;overflow:hidden;background:repeating-linear-gradient(0deg,transparent,transparent 48px,rgba(0,0,0,0.08) 48px,rgba(0,0,0,0.08) 96px),linear-gradient(180deg,var(--green1) 0%,var(--green2) 50%,var(--green1) 100%);display:flex;align-items:center;justify-content:center;padding:12px;}
+.field-inner{position:relative;width:100%;max-width:380px;aspect-ratio:0.62;border:2px solid var(--line);border-radius:3px;flex-shrink:0;}
+.fl-midline{position:absolute;top:50%;left:0;right:0;height:1px;background:var(--line);}
+.fl-circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;border:1px solid var(--line);border-radius:50%;}
+.fl-pt{position:absolute;top:0;left:50%;transform:translateX(-50%);width:52%;height:14%;border:1px solid var(--line);border-top:none;}
+.fl-pb{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:52%;height:14%;border:1px solid var(--line);border-bottom:none;}
+.fl-gt{position:absolute;top:0;left:50%;transform:translateX(-50%);width:20%;height:4%;border:1.5px solid var(--line);border-top:none;background:rgba(255,255,255,0.04);}
+.fl-gb{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:20%;height:4%;border:1.5px solid var(--line);border-bottom:none;background:rgba(255,255,255,0.04);}
+.rows{position:absolute;inset:0;display:flex;flex-direction:column;padding:6% 3%;gap:0;}
+.row{flex:1;display:flex;align-items:center;justify-content:space-around;}
+
+.slot{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;position:relative;transition:transform 0.15s;}
+.slot:hover .circle,.slot:focus .circle{transform:scale(1.08);}
+.slot:active .circle{transform:scale(0.95);}
+.circle{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;position:relative;transition:border-color 0.2s,box-shadow 0.2s,transform 0.15s;backdrop-filter:blur(3px);}
+.circle.filled{border-color:var(--gold);background:rgba(10,10,10,0.7);box-shadow:0 0 12px rgba(255,215,0,0.2);}
+.circle.active{box-shadow:0 0 0 3px var(--gold),0 0 18px rgba(255,215,0,0.35);}
+.circle .initials{font-family:'Bebas Neue',sans-serif;font-size:13px;color:var(--gold);letter-spacing:1px;}
+.circle .empty-icon{font-size:9px;letter-spacing:0.5px;font-weight:700;color:rgba(255,255,255,0.35);}
+.pos-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#000;font-size:7px;font-weight:700;padding:1px 3px;border-radius:3px;letter-spacing:0.5px;}
+.rating-dot{position:absolute;bottom:-4px;left:-4px;background:var(--red);color:#fff;font-size:8px;font-weight:700;padding:1px 4px;border-radius:3px;}
+.slot-name{font-size:8.5px;font-weight:600;color:#fff;text-align:center;text-shadow:0 1px 5px rgba(0,0,0,0.95);max-width:60px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2;}
+.slot-name.empty{color:rgba(255,255,255,0.35);font-weight:400;font-size:8px;}
+
+.sidebar{width:260px;background:var(--surface);border-left:1px solid var(--border2);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;}
+.sb-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.sb-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;color:var(--gold);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-badge{font-size:10px;padding:3px 8px;border-radius:10px;background:var(--gold);color:#000;font-weight:700;letter-spacing:1px;flex-shrink:0;}
+.sb-hint{padding:8px 14px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);}
+.list{flex:1;overflow-y:auto;}
+.list::-webkit-scrollbar{width:3px;}
+.list::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:2px;}
+
+.pi{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.03);transition:background 0.12s;}
+.pi:hover{background:rgba(255,215,0,0.07);}
+.pi.used{opacity:0.3;pointer-events:none;}
+.pi.sel{background:rgba(255,215,0,0.13);border-left:2px solid var(--gold);}
+.pi-av{width:36px;height:36px;border-radius:50%;background:var(--surface3);border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:12px;color:var(--gold);flex-shrink:0;}
+.pi-info{flex:1;min-width:0;}
+.pi-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pi-pos{font-size:10px;color:var(--muted);margin-top:1px;}
+.pi-rat{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);flex-shrink:0;}
+
+.sb-btns{padding:10px 14px;border-top:1px solid var(--border);display:flex;gap:8px;}
+.btn{flex:1;padding:9px 6px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;letter-spacing:0.5px;transition:opacity 0.15s,transform 0.1s;font-family:'Barlow',sans-serif;}
+.btn:active{transform:scale(0.97);}
+.btn-rm{background:var(--surface3);color:var(--text);border:1px solid var(--border2);}
+.btn-reset{background:var(--red);color:#fff;}
+.empty-state{padding:32px 16px;text-align:center;color:var(--muted);font-size:13px;}
+.empty-em{font-size:28px;margin-bottom:8px;display:block;}
+
+.sheet-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;touch-action:none;}
+.sheet-overlay.open{display:block;}
+.sheet{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-radius:16px 16px 0 0;border-top:1.5px solid rgba(255,215,0,0.3);z-index:201;max-height:70dvh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);}
+.sheet.open{transform:translateY(0);}
+.sheet-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:10px auto 0;}
+.sheet-head{padding:10px 16px 8px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.sheet-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--gold);}
+.sheet-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:0 4px;line-height:1;}
+.sheet-list{overflow-y:auto;flex:1;}
+
+@media(max-width:640px){
+  .sidebar{display:none;}
+  .layout{height:calc(100dvh - 110px);}
+  .field-wrap{padding:8px;}
+  .hdr-logo{font-size:20px;}
+  .circle{width:42px;height:42px;}
+  .slot-name{font-size:8px;max-width:52px;}
+  .pos-badge{font-size:6px;}
+  .rating-dot{font-size:7px;}
+  .avg-track{min-width:80px;}
+}
+@media(min-width:641px){
+  .sheet-overlay,.sheet{display:none !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-logo">🏆 Deutschland Draft</div>
+  <div class="hdr-flag">
+    <div style="background:#000"></div>
+    <div style="background:#DD0000"></div>
+    <div style="background:#FFD700"></div>
+  </div>
+  <div class="formation-wrap">
+    <span class="formation-label">Formation</span>
+    <select id="fp">
+      <option value="442">4-4-2</option>
+      <option value="433" selected>4-3-3</option>
+      <option value="4231">4-2-3-1</option>
+      <option value="352">3-5-2</option>
+      <option value="532">5-3-2</option>
+      <option value="451">4-5-1</option>
+      <option value="343">3-4-3</option>
+    </select>
+  </div>
+</div>
+
+<div class="rating-bar">
+  <div class="avg-block">
+    <div>
+      <div class="avg-label">Team Rating</div>
+      <div class="avg-sub" id="avgSub">0 players selected</div>
+    </div>
+    <div class="avg-track"><div class="avg-fill" id="avgFill" style="width:0%"></div></div>
+    <div class="avg-num" id="avgNum">—</div>
+  </div>
+  <div class="slot-count" id="slotCount"><span>0</span> / 11</div>
+</div>
+
+<div class="layout">
+  <div class="field-wrap">
+    <div class="field-inner">
+      <div class="fl-midline"></div>
+      <div class="fl-circle"></div>
+      <div class="fl-pt"></div><div class="fl-pb"></div>
+      <div class="fl-gt"></div><div class="fl-gb"></div>
+      <div class="rows" id="fieldRows"></div>
+    </div>
+  </div>
+  <div class="sidebar" id="desktopSidebar">
+    <div class="sb-head">
+      <span class="sb-title" id="sbTitle">Select a position</span>
+      <span class="sb-badge" id="sbBadge" style="display:none"></span>
+    </div>
+    <div class="sb-hint" id="sbHint">Tap any slot on the pitch to pick a player.</div>
+    <div class="list" id="desktopList">
+      <div class="empty-state"><span class="empty-em">⚽</span>Click a position slot on the field</div>
+    </div>
+    <div class="sb-btns">
+      <button class="btn btn-rm" onclick="clearSlot()">✕ Remove</button>
+      <button class="btn btn-reset" onclick="resetAll()">↺ Reset all</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <span class="sheet-title" id="sheetTitle">Pick player</span>
+    <button class="sheet-close" onclick="closeSheet()">✕</button>
+  </div>
+  <div class="sheet-list" id="sheetList"></div>
+</div>
+
+<script>
+const PLAYERS={GK:[{name:"Manuel Neuer",rating:99,initials:"MN"},{name:"Marc-André ter Stegen",rating:95,initials:"MT"},{name:"Kevin Trapp",rating:92,initials:"KT"},{name:"Oliver Kahn",rating:99,initials:"OK"},{name:"Jens Lehmann",rating:95,initials:"JL"}],DEF:[{name:"Franz Beckenbauer",rating:99,initials:"FB"},{name:"Mats Hummels",rating:98,initials:"MH"},{name:"Philipp Lahm",rating:98,initials:"PL"},{name:"Antonio Rüdiger",rating:97,initials:"AR"},{name:"Joshua Kimmich",rating:97,initials:"JK"},{name:"Nico Schlotterbeck",rating:96,initials:"NS"},{name:"David Raum",rating:95,initials:"DR"},{name:"Jonathan Tah",rating:95,initials:"JT"}],MID:[{name:"Toni Kroos",rating:99,initials:"TK"},{name:"Lothar Matthäus",rating:99,initials:"LM"},{name:"Jamal Musiala",rating:97,initials:"JM"},{name:"Florian Wirtz",rating:97,initials:"FW"},{name:"Michael Ballack",rating:97,initials:"MB"},{name:"Bastian Schweinsteiger",rating:97,initials:"BS"},{name:"Ilkay Gündogan",rating:97,initials:"IG"},{name:"Leon Goretzka",rating:96,initials:"LG"},{name:"Leroy Sané",rating:96,initials:"LS"},{name:"Emre Can",rating:95,initials:"EC"}],FWD:[{name:"Gerd Müller",rating:99,initials:"GM"},{name:"Marco Reus",rating:98,initials:"MR"},{name:"Thomas Müller",rating:98,initials:"TM"},{name:"Miroslav Klose",rating:97,initials:"MK"},{name:"Kai Havertz",rating:97,initials:"KH"},{name:"Lukas Podolski",rating:97,initials:"LP"}]};
+const FORMATIONS={"433":[[{pos:"FWD",label:"LW"},{pos:"FWD",label:"ST"},{pos:"FWD",label:"RW"}],[{pos:"MID",label:"LCM"},{pos:"MID",label:"CM"},{pos:"MID",label:"RCM"}],[{pos:"DEF",label:"LB"},{pos:"DEF",label:"LCB"},{pos:"DEF",label:"RCB"},{pos:"DEF",label:"RB"}],[{pos:"GK",label:"GK"}]],"442":[[{pos:"FWD",label:"LS"},{pos:"FWD",label:"RS"}],[{pos:"MID",label:"LM"},{pos:"MID",label:"LCM"},{pos:"MID",label:"RCM"},{pos:"MID",label:"RM"}],[{pos:"DEF",label:"LB"},{pos:"DEF",label:"LCB"},{pos:"DEF",label:"RCB"},{pos:"DEF",label:"RB"}],[{pos:"GK",label:"GK"}]],"4231":[[{pos:"FWD",label:"LAM"},{pos:"FWD",label:"CAM"},{pos:"FWD",label:"RAM"}],[{pos:"MID",label:"LCM"},{pos:"MID",label:"RCM"}],[{pos:"DEF",label:"LB"},{pos:"DEF",label:"LCB"},{pos:"DEF",label:"RCB"},{pos:"DEF",label:"RB"}],[{pos:"GK",label:"GK"}]],"352":[[{pos:"FWD",label:"LS"},{pos:"FWD",label:"RS"}],[{pos:"MID",label:"LM"},{pos:"MID",label:"LCM"},{pos:"MID",label:"CM"},{pos:"MID",label:"RCM"},{pos:"MID",label:"RM"}],[{pos:"DEF",label:"LCB"},{pos:"DEF",label:"CB"},{pos:"DEF",label:"RCB"}],[{pos:"GK",label:"GK"}]],"532":[[{pos:"FWD",label:"LS"},{pos:"FWD",label:"RS"}],[{pos:"MID",label:"LCM"},{pos:"MID",label:"CM"},{pos:"MID",label:"RCM"}],[{pos:"DEF",label:"LWB"},{pos:"DEF",label:"LCB"},{pos:"DEF",label:"CB"},{pos:"DEF",label:"RCB"},{pos:"DEF",label:"RWB"}],[{pos:"GK",label:"GK"}]],"451":[[{pos:"FWD",label:"ST"}],[{pos:"MID",label:"LM"},{pos:"MID",label:"LCM"},{pos:"MID",label:"CM"},{pos:"MID",label:"RCM"},{pos:"MID",label:"RM"}],[{pos:"DEF",label:"LB"},{pos:"DEF",label:"LCB"},{pos:"DEF",label:"RCB"},{pos:"DEF",label:"RB"}],[{pos:"GK",label:"GK"}]],"343":[[{pos:"FWD",label:"LW"},{pos:"FWD",label:"ST"},{pos:"FWD",label:"RW"}],[{pos:"MID",label:"LCM"},{pos:"MID",label:"CM"},{pos:"MID",label:"RCM"},{pos:"MID",label:"RM"}],[{pos:"DEF",label:"LCB"},{pos:"DEF",label:"CB"},{pos:"DEF",label:"RCB"}],[{pos:"GK",label:"GK"}]]};
+let formation="433",selectedSlotId=null,assignments={};
+function getSlots(){return FORMATIONS[formation].flatMap((r,ri)=>r.map((s,ci)=>({id:`${ri}-${ci}`,pos:s.pos,label:s.label})));}
+function getUsed(){return Object.values(assignments).map(p=>p.name);}
+function shortName(n){const p=n.split(' ');return p.length===1||n.length<=10?n:p[p.length-1];}
+function updateRating(){const vals=Object.values(assignments).map(p=>p.rating);const count=vals.length;const el_num=document.getElementById('avgNum');const el_fill=document.getElementById('avgFill');const el_sub=document.getElementById('avgSub');const el_count=document.getElementById('slotCount');const totalSlots=getSlots().length;el_count.innerHTML=`<span>${count}</span> / ${totalSlots}`;if(count===0){el_num.textContent='—';el_fill.style.width='0%';el_sub.textContent='No players yet';return;}const avg=Math.round(vals.reduce((a,b)=>a+b,0)/count);el_num.textContent=avg;const pct=Math.max(0,Math.min(100,(avg-85)/15*100));el_fill.style.width=pct+'%';el_sub.textContent=count===totalSlots?'Full squad!':count+' player'+(count!==1?'s':'')+' selected';}
+function renderField(){const c=document.getElementById('fieldRows');c.innerHTML='';FORMATIONS[formation].forEach((row,ri)=>{const rd=document.createElement('div');rd.className='row';row.forEach((slot,ci)=>{const id=`${ri}-${ci}`;const player=assignments[id];const isActive=selectedSlotId===id;const d=document.createElement('div');d.className='slot';d.tabIndex=0;d.setAttribute('role','button');d.innerHTML=`<div class="circle${player?' filled':''}${isActive?' active':''}"> ${player?`<span class="initials">${player.initials}</span>`:`<span class="empty-icon">${slot.label}</span>`} <span class="pos-badge">${slot.label}</span>${player?`<span class="rating-dot">${player.rating}</span>`:''}</div><span class="slot-name${player?'':' empty'}">${player?shortName(player.name):''}</span>`;d.addEventListener('click',()=>selectSlot(id,slot.pos,slot.label));d.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectSlot(id,slot.pos,slot.label);}});rd.appendChild(d);});c.appendChild(rd);});}
+function buildPlayerItems(pos,container,isMobile){container.innerHTML='';const used=getUsed();const assigned=assignments[selectedSlotId];PLAYERS[pos].sort((a,b)=>b.rating-a.rating).forEach(player=>{const isUsed=used.includes(player.name)&&(!assigned||assigned.name!==player.name);const isSel=assigned&&assigned.name===player.name;const d=document.createElement('div');d.className=`pi${isUsed?' used':''}${isSel?' sel':''}`;d.innerHTML=`<div class="pi-av">${player.initials}</div><div class="pi-info"><div class="pi-name">${player.name}</div><div class="pi-pos">${pos}</div></div><div class="pi-rat">${player.rating}</div>`;if(!isUsed)d.addEventListener('click',()=>{assignPlayer(player);if(isMobile)closeSheet();});container.appendChild(d);});}
+function selectSlot(id,pos,label){selectedSlotId=id;renderField();const isMobile=window.innerWidth<=640;if(isMobile){document.getElementById('sheetTitle').textContent=`${label} — Pick player`;buildPlayerItems(pos,document.getElementById('sheetList'),true);document.getElementById('sheetOverlay').classList.add('open');document.getElementById('sheet').classList.add('open');}else{document.getElementById('sbTitle').textContent=`${label} — Pick player`;const b=document.getElementById('sbBadge');b.textContent=pos;b.style.display='inline-block';document.getElementById('sbHint').textContent=`Showing ${pos} players. Tap to assign.`;buildPlayerItems(pos,document.getElementById('desktopList'),false);}}
+function assignPlayer(player){if(!selectedSlotId)return;assignments[selectedSlotId]=player;renderField();updateRating();const slots=getSlots();const slot=slots.find(s=>s.id===selectedSlotId);if(slot&&window.innerWidth>640)buildPlayerItems(slot.pos,document.getElementById('desktopList'),false);}
+function clearSlot(){if(!selectedSlotId)return;delete assignments[selectedSlotId];renderField();updateRating();const slots=getSlots();const slot=slots.find(s=>s.id===selectedSlotId);if(slot&&window.innerWidth>640)buildPlayerItems(slot.pos,document.getElementById('desktopList'),false);}
+function resetAll(){assignments={};selectedSlotId=null;renderField();updateRating();document.getElementById('sbTitle').textContent='Select a position';document.getElementById('sbBadge').style.display='none';document.getElementById('sbHint').textContent='Tap any slot on the pitch to pick a player.';document.getElementById('desktopList').innerHTML='<div class="empty-state"><span class="empty-em">⚽</span>Click a position slot on the field</div>';}
+function closeSheet(){document.getElementById('sheetOverlay').classList.remove('open');document.getElementById('sheet').classList.remove('open');}
+document.getElementById('fp').addEventListener('change',e=>{formation=e.target.value;assignments={};selectedSlotId=null;renderField();updateRating();document.getElementById('sbTitle').textContent='Select a position';document.getElementById('sbBadge').style.display='none';document.getElementById('sbHint').textContent='Tap any slot on the pitch to pick a player.';document.getElementById('desktopList').innerHTML='<div class="empty-state"><span class="empty-em">⚽</span>Click a position slot on the field</div>';});
+renderField();updateRating();
+</script>
+</body>
+</html>
